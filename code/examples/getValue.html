@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ngDemo">
+<head>
+    <meta charset="UTF-8">
+    <title>获取DOM属性值</title>
+    <script src="../../resources/js/lib/angular-1.3.20.js"></script>
+</head>
+    <body>
+        <h1>在没有独立作用域中的指令中获取DOM属性值</h1>
+        <demo attr-str="str" attr-bool=true attr-scope="demo.id" attr-inter="{{inter}}"></demo>
+        <script>
+            var _demo = angular.module("ngDemo", []);
+
+            _demo.controller("demoCtr", function($scope) {
+                $scope.demo = {
+                    "id": "scope"
+                };
+                $scope.attr = "demo";
+            });
+
+            _demo.directive("demo", function($parse) {
+                return {
+                    "restrict": "E",
+                    "link": function(scope, element, attrs) {
+                        console.dir(attrs);
+                        console.log("属性值为固定字符串:", typeof attrs.attrStr + "--" + attrs.attrStr);
+
+                        var _attrBool = scope.$eval(attrs.attrBool);
+                        console.log("属性值为布尔类型:", typeof _attrBool + "--" + _attrBool);
+
+                        scope.demo = {
+                            "id": "scope"
+                        };
+                        var _scope = $parse(attrs.attrScope);
+                        console.log("属性值为scope属性:", typeof _scope + "--" + _scope(scope));
+
+                        scope.inter = "inter";
+                        attrs.$observe("attrInter", function(value) {
+                            console.log("属性值为含有插值表达式属性:", typeof value + "--" + value);
+                        });
+
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
