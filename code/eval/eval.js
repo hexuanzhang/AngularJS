@@ -20,5 +20,4 @@ function evalController($log, $scope) {
             e.name = "evalAsync test";
         })
     };
-
 }
