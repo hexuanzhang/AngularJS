@@ -21,5 +21,4 @@ function evalController($log, $scope) {
         })
     };
 
-
 }

@@ -6,7 +6,10 @@
     <script src="../../resources/js/lib/angular-1.3.20.js"></script>
 </head>
 <body>
-    <div ng-controller="eval"></div>
+    <div ng-controller="eval as e">
+        <p ng-bind="e.name"></p>
+        <button id="async_btn">async</button>
+    </div>
     <script src="eval.js"></script>
 </body>
 </html>
